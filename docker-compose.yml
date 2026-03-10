@@ -1,0 +1,28 @@
+services:
+  controller:
+    build:
+      context: ./docker/controller
+    hostname: controller
+    container_name: controller
+    networks:
+      - slurm-net
+
+  node01:
+    build:
+      context: ./docker/worker
+    hostname: node01
+    container_name: node01
+    networks:
+      - slurm-net
+
+  node02:
+    build:
+      context: ./docker/worker
+    hostname: node02
+    container_name: node02
+    networks:
+      - slurm-net
+
+networks:
+  slurm-net:
+    driver: bridge
