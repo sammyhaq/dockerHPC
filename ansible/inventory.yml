@@ -8,5 +8,5 @@ all:
         node01:
         node02:
   vars:
-    ansible_password: password
+    ansible_password: ansible
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'

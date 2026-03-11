@@ -6,6 +6,8 @@ services:
     container_name: controller
     volumes:
       - ./ansible:/etc/ansible
+      - ./shared/home:/home
+      - ./shared/scratch:/scratch
     networks:
       - slurm-net
 
@@ -14,6 +16,9 @@ services:
       context: ./docker/worker
     hostname: node01
     container_name: node01
+    volumes:
+      - ./shared/home:/home
+      - ./shared/scratch:/scratch
     networks:
       - slurm-net
 
@@ -22,6 +27,9 @@ services:
       context: ./docker/worker
     hostname: node02
     container_name: node02
+    volumes:
+      - ./shared/home:/home
+      - ./shared/scratch:/scratch
     networks:
       - slurm-net
 
