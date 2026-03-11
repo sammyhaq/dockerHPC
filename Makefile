@@ -54,6 +54,15 @@ test:
 	docker exec controller sinfo
 	docker exec controller scontrol show nodes
 
+	@echo "Testing job submission .."
+	docker exec controller sbatch \
+	   	--wrap="echo 'test'" \
+		--output=/scratch/test.out
+
+	sleep 2
+	docker exec controller cat /scratch/test.out
+	docker exec controller rm /scratch/test.out
+
 	@echo "  .. Testing complete."
 
 clean:
