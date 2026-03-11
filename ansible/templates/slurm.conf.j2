@@ -1,0 +1,61 @@
+# slurm.conf - SLURM configuration file
+
+#
+# Cluster identity
+#
+ClusterName=dockerhpc
+SlurmctldHost=controller
+
+#
+# Paths and directories
+#
+SlurmctldPidFile=/var/run/slurmctld.pid
+SlurmdPidFile=/var/run/slurmd.pid
+SlurmdSpoolDir=/var/spool/slurmd
+StateSaveLocation=/var/spool/slurmctld
+
+#
+# Logging
+#
+SlurmctldLogFile=/var/log/slurm/slurmctld.log
+SlurmdLogFile=/var/log/slurm/slurmd.log
+
+#
+# Authentication (munge)
+#
+AuthType=auth/munge
+CryptoType=crypto/munge
+
+#
+# Process tracking
+#
+ProctrackType=proctrack/linuxproc
+
+#
+# Scheduling
+#
+SchedulerType=sched/backfill
+SelectType=select/cons_tres
+SelectTypeParameters=CR_Core
+
+#
+# Timeouts
+#
+SlurmctldTimeout=120
+SlurmdTimeout=120
+InactiveLimit=0
+MinJobAge=300
+KillWait=30
+Waittime=0
+
+#
+# Node definitions
+#
+NodeName=node01 CPUs=2 State=UNKNOWN
+NodeName=node02 CPUs=2 State=UNKNOWN
+
+#
+# Partition definitions
+#
+PartitionName=debug Nodes=node01,node02 Default=YES MaxTime=10 State=UP
+PartitionName=long Nodes=node01,node02 MaxTime=120 State=UP

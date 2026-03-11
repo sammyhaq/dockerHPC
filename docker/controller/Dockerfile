@@ -1,7 +1,6 @@
 ## INITIAL SETUP
 
 FROM ubuntu:22.04
-
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Installing SSH server
@@ -46,6 +45,9 @@ RUN apt-get install -y ansible \
 
 ## MUNGE
 RUN apt-get install -y munge
+
+## SLURM (controller)
+RUN apt-get install -y slurm-wlm slurmctld
 
 # Cleanup apt-get update list:
 RUN rm -rf /var/lib/apt/lists/*

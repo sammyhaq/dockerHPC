@@ -7,3 +7,4 @@
       ansible.builtin.ping:
 
 - import_playbook: munge.yml
+- import_playbook: slurm.yml

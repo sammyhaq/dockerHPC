@@ -1,7 +1,6 @@
 ## INITIAL SETUP
 
 FROM ubuntu:22.04
-
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Installing SSH server
@@ -40,6 +39,9 @@ RUN echo 'root:root' | chpasswd
 ## MUNGE
 # Authentication service for SLURM
 RUN apt-get install -y munge
+
+## SLURM (worker)
+RUN apt-get install -y slurm-wlm slurmd
 
 # Cleanup apt-get update list:
 RUN rm -rf /var/lib/apt/lists/* \

@@ -1,0 +1,58 @@
+---
+- name: Configure SLURM
+  hosts: all
+  become: yes
+  tasks:
+    - name: Create SLURM log directory
+      ansible.builtin.file:
+        path: /var/log/slurm
+        state: directory
+        owner: slurm
+        group: slurm
+        mode: '0755'
+
+    - name: Deploy slurm.conf
+      ansible.builtin.template:
+        src: ../templates/slurm.conf.j2
+        dest: /etc/slurm/slurm.conf
+        owner: slurm
+        group: slurm
+        mode: '0644'
+
+
+- name: Configure SLURM controller
+  hosts: controllers
+  become: yes
+  tasks:
+    - name: Create slurmctld spool directory
+      ansible.builtin.file:
+        path: /var/spool/slurmctld
+        state: directory
+        owner: slurm
+        group: slurm
+        mode: '0755'
+
+    - name: Start slurmctld
+      ansible.builtin.shell: |
+        slurmctld
+      args:
+        creates: /var/run/slurmctld.pid
+
+
+- name: Configure SLURM workers
+  hosts: workers
+  become: yes
+  tasks:
+    - name: Create slurmd spool directory
+      ansible.builtin.file:
+        path: /var/spool/slurmd
+        state: directory
+        owner: slurm
+        group: slurm
+        mode: '0755'
+
+    - name: Start slurmd
+      ansible.builtin.shell: |
+        slurmd
+      args:
+        creates: /var/run/slurmd.pid
