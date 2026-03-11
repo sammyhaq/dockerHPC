@@ -5,3 +5,5 @@
   tasks:
     - name: Ping all hosts
       ansible.builtin.ping:
+
+- import_playbook: munge.yml

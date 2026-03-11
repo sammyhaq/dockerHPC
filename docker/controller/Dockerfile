@@ -12,10 +12,14 @@ RUN apt-get update && apt-get install -y \
 # Required for sshd
 RUN mkdir /var/run/sshd
 
-# Slurm user
+# Slurm user (UID 1001)
 RUN groupadd -g 1001 slurm \
     && useradd -m -u 1001 -g slurm -s /bin/bash slurm \
     && echo 'slurm:password' | chpasswd
+
+# Munge user (UID 999)
+RUN groupadd -g 999 munge \
+    && useradd -r -u 999 -g munge -s /sbin/nologin munge
 
 # Ansible user (passwordless sudo for automation)
 RUN apt-get install -y sudo \
@@ -37,10 +41,11 @@ RUN echo 'root:root' | chpasswd
 # Ansible is only needed on the controller node.
 
 # Not needed to really be split from line 8, but for compartmentalization's sake:
-RUN apt-get install -y \
-    ansible \
+RUN apt-get install -y ansible \
     sshpass
 
+## MUNGE
+RUN apt-get install -y munge
 
 # Cleanup apt-get update list:
 RUN rm -rf /var/lib/apt/lists/*

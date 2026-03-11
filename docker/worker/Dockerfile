@@ -12,10 +12,14 @@ RUN apt-get update && apt-get install -y \
 # Required for sshd
 RUN mkdir /var/run/sshd
 
-# Slurm user
+# Slurm user (UID 1001)
 RUN groupadd -g 1001 slurm \
     && useradd -m -u 1001 -g slurm -s /bin/bash slurm \
     && echo 'slurm:password' | chpasswd
+
+# Munge user (UID 999)
+RUN groupadd -g 999 munge \
+    && useradd -r -u 999 -g munge -s /sbin/nologin munge
 
 # Ansible user (passwordless sudo for automation)
 RUN apt-get install -y sudo \
@@ -32,6 +36,10 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 
 # Root password for debugging
 RUN echo 'root:root' | chpasswd
+
+## MUNGE
+# Authentication service for SLURM
+RUN apt-get install -y munge
 
 # Cleanup apt-get update list:
 RUN rm -rf /var/lib/apt/lists/* \
