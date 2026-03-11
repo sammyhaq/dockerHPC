@@ -1,0 +1,12 @@
+all:
+  children:
+    controllers:
+      hosts:
+        controller:
+    workers:
+      hosts:
+        node01:
+        node02:
+  vars:
+    ansible_password: password
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'

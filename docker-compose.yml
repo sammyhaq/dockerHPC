@@ -4,6 +4,8 @@ services:
       context: ./docker/controller
     hostname: controller
     container_name: controller
+    volumes:
+      - ./ansible:/etc/ansible
     networks:
       - slurm-net
 
