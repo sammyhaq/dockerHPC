@@ -16,7 +16,7 @@
 # 	up         start containers only
 # 	down       stop containers
 # 	configure  run main ansible playbook to configure cluster
-#   test       run all tests defined
+#   test       run all tests
 # 	clean      remove all ocntainers and volumes
 #
 #   all        build, configure, and test
